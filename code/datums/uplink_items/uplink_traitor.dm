@@ -355,6 +355,15 @@
 	species = list("Machine")
 	surplus = 0
 
+//Nucleation
+
+datum/uplink_item/racial/2ndchance
+    name = "Second Chance Implant"
+    desc = "An implant special for nucleations. On use, gives a second chance"
+    reference = "SNC"
+    item = /obj/item/implanter/2ndchance
+    cost = 8
+    species = list("Nucleation")
 
 //plasmeme
 /datum/uplink_item/species_restricted/fireproofing_nanites
