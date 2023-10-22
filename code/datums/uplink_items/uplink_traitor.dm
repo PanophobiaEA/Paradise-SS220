@@ -356,14 +356,20 @@
 	surplus = 0
 
 //Nucleation
+A.limited_stock = 1
+if((U.loc in user.contents || (in_range(U.loc, user) && isturf(U.loc.loc))))
+		if(cost > U.uses)
+			return
 
-datum/uplink_item/racial/2ndchance
-    name = "Second Chance Implant"
-    desc = "An implant special for nucleations. On use, gives a second chance"
-    reference = "SNC"
-    item = /obj/item/implanter/2ndchance
-    cost = 8
-    species = list("Nucleation")
+
+		var/obj/I = spawn_item(get_turf(user), U)
+	datum/uplink_item/racial/2ndchance
+    	name = "Second Chance Implant"
+    	desc = "An implant special for nucleations. On use, gives a second chance"
+    	reference = "SNC"
+    	item = /obj/item/implanter/2ndchance
+    	cost = 8
+    	species = list("Nucleation")
 
 //plasmeme
 /datum/uplink_item/species_restricted/fireproofing_nanites
