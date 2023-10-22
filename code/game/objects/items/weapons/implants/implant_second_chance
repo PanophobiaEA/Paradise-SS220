@@ -1,0 +1,48 @@
+/obj/item/implant/2ndchance
+	name = "second chance implant"
+	desc = "I give you a salvation."
+	icon_state = "explosive"
+	origin_tech = "materials=3;combat=2;biotech=4;syndicate=2"
+	uses = 1
+
+/obj/item/implant/2ndchance/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Nucleation Corp RX-70 Employee Management Implant<BR>
+				<b>Life:</b> Activates upon use.<BR>
+				<b>Important Notes:</b> Explodes, teleports and heals<BR>
+				<HR>
+				<b>Implant Details:</b><BR>
+				<b>Function:</b> Contains speciall nanits that teleports and heals a nucleation, creating small explosion to deceive the enemy.<BR>
+				<b>Special Features:</b> Explodes, teleports and heals<BR>
+				"}
+	return dat
+
+/obj/item/implant/2ndchance/activate(cause)
+	uses--
+	if(!cause || !imp_in)	return 0
+	if(cause == "action_button" && race = list("Machine"))
+		return 0
+	to_chat(imp_in, "<span class='notice'>You activate your second chance implant.</span>")
+	var/mob/living/whistler
+	whistler = user
+	var/turf/current_turf = get_turf(user)
+	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z) // Определяет случайное место появления игрока
+	H.visible_message("<span class='warning'>Тело [H] взрывается, оставляя после себя множество микроскопических кристаллов!</span>")
+	explosion(T, 0, 0, 3, 6, cause = H) // Create a fake nucleation explosion burst 
+	/obj/effect/proc_holder/spell/targeted/target.revive() //Реджувает нюклеацию
+	do_teleport(channel = TELEPORT_CHANNEL_BLUESPACE) //Собственно, телепортирует игрока
+
+/obj/item/implanter/2ndchance
+	name = "implanter (2ndchance)"
+
+/obj/item/implanter/2ndchance/New()
+	imp = new /obj/item/implant/2ndchance(src)
+	..()
+
+/obj/item/implantcase/2ndchance
+	name = "implant case - '2ndchance'"
+	desc = "A glass case containing a second chance implant."
+
+/obj/item/implantcase/2ndchance/New()
+	imp = new /obj/item/implant/2ndchance(src)
+	..()
